@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
 import type { NextPage } from "next";
 
-const Home: NextPage = () => {
-  return <Typography>DNArchive</Typography>;
+const Browse: NextPage = () => {
+  return <Typography>Browse</Typography>;
 };
 
-export default Home;
+export default Browse;
