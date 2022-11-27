@@ -1,4 +1,4 @@
-import type { AppRouter } from "@pages/api/trpc/[trpc]";
+import type { AppRouter } from "@server/api/base";
 import { httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 
@@ -22,4 +22,5 @@ export const trpc = createTRPCNext<AppRouter>({
       ],
     };
   },
+  ssr: false,
 });

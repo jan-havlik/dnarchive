@@ -1,16 +1,16 @@
-import Typography from "@mui/material/Typography";
+import { BrowseTable } from "@components/browse/BrowseTable";
 import { trpc } from "@utils/trpc";
 import type { NextPage } from "next";
 
 const Browse: NextPage = () => {
-  const data = trpc.browse.list.useQuery();
-  const name = trpc.browse.listByName.useQuery({ name: "chr 1" });
+  const { data, isLoading, isError } = trpc.browse.list.useQuery();
 
   return (
-    <>
-      <Typography>{JSON.stringify(data.data?.chromosomes)}</Typography>
-      <Typography>{JSON.stringify(name.data?.chromosome)}</Typography>
-    </>
+    <BrowseTable
+      data={data?.chromosomes}
+      isLoading={isLoading}
+      isError={isError}
+    />
   );
 };
 
