@@ -18,6 +18,8 @@
     "paths": {
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@server/*": ["server/*"],
       "@config": ["config/index.ts"],
     },
   },

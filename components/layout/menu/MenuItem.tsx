@@ -18,8 +18,6 @@ function MenuItem(props: Props) {
   const router = useRouter();
 
   const handleClick = useCallback(() => {
-    console.log(path);
-
     router.push(path);
   }, [router, path]);
 
