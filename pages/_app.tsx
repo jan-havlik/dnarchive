@@ -10,7 +10,7 @@ import type { AppProps } from "next/app";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
     </Layout>
   );
 }
