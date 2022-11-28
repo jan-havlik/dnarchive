@@ -1,0 +1,42 @@
+name: dnaarchive - pipelines
+
+on:
+  push:
+    branches:
+      - main
+    pull_request:
+      branches:
+        - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: npm install
+        run: npm ci
+      - name: lint
+        run: npm run lint
+
+  prettier:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: npm install
+        run: npm ci
+      - name: prettier
+        run: npm run prettier
