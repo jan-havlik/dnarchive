@@ -42,7 +42,7 @@ function TopBar() {
       sx={{
         width: `calc(100% - ${DRAWER_WIDTH}px)`,
         ml: `${DRAWER_WIDTH}px`,
-        bgcolor: "white",
+        backgroundColor: "white",
       }}
     >
       <Toolbar>

@@ -3,6 +3,7 @@ import TopBar from "@components/layout/TopBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
+import * as Sentry from "@sentry/react";
 import React from "react";
 
 type Props = {
@@ -26,4 +27,4 @@ function Layout({ children }: Props) {
   );
 }
 
-export default Layout;
+export default Sentry.withProfiler(Layout);
