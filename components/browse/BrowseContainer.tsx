@@ -13,7 +13,7 @@ type Props = {
   isError: boolean;
 };
 
-export function BrowseTable({ data = [], isLoading, isError }: Props) {
+export function BrowseContainer({ data = [], isLoading, isError }: Props) {
   const columns = useMemo<MRT_ColumnDef<BrowseListQueryData[0]>[]>(
     () => [
       {
@@ -40,7 +40,7 @@ export function BrowseTable({ data = [], isLoading, isError }: Props) {
       {
         accessorFn: (originalRow) => originalRow.coverage,
         id: "coverage",
-        header: "Analysis coverage",
+        header: "AnalysisContainer coverage",
         Cell: ({ cell }) => (
           <StatCell label={`${cell.getValue<number>() * 100}%`} />
         ),
