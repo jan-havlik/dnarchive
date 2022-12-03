@@ -2,10 +2,11 @@ import { DRAWER_WIDTH } from "@config";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
-import AppBar from "@mui/material/AppBar";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { grey } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
@@ -21,7 +22,33 @@ const SUB_ROUTE = [
   { route: "/support", title: "Support" },
 ];
 
-function TopBar() {
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: DRAWER_WIDTH.OPEN,
+    width: `calc(100% - ${DRAWER_WIDTH.OPEN}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+type Props = {
+  open: boolean;
+};
+
+function TopBar({ open }: Props) {
   const router = useRouter();
 
   const subTitle = useMemo(() => {
@@ -38,10 +65,12 @@ function TopBar() {
     <AppBar
       color="primary"
       position="fixed"
-      elevation={0}
+      elevation={1}
       sx={{
-        width: `calc(100% - ${DRAWER_WIDTH}px)`,
-        ml: `${DRAWER_WIDTH}px`,
+        width: `calc(100% - ${
+          open ? DRAWER_WIDTH.OPEN : DRAWER_WIDTH.CLOSED
+        }px)`,
+        ml: `${open ? DRAWER_WIDTH.OPEN : DRAWER_WIDTH.CLOSED}px`,
         backgroundColor: "white",
       }}
     >

@@ -1,8 +1,8 @@
-import Typography from "@mui/material/Typography";
-import type { NextPage } from "next";
+import AnalysisContainer from "@components/analysis/AnalysisContainer";
+import { NextPage } from "next";
 
 const Analysis: NextPage = () => {
-  return <Typography>Analysis</Typography>;
+  return <AnalysisContainer />;
 };
 
 export default Analysis;
