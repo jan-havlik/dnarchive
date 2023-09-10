@@ -5,7 +5,6 @@ import React, { useMemo } from "react";
 
 import { BrowseTableActions } from "./BrowseTableActions";
 import { NameCell } from "./cells/NameCell";
-import { StatCell } from "./cells/StatCell";
 
 type Props = {
   data?: BrowseListQueryData;
@@ -19,31 +18,37 @@ export function BrowseContainer({ data = [], isLoading, isError }: Props) {
       {
         accessorFn: (originalRow) => originalRow.name,
         id: "name",
-        header: "Chromosome name",
+        header: "Chromosome",
         Cell: ({ cell, row }) => (
           <NameCell
             name={cell.getValue<string>()}
-            updatedAt={row.original.updatedAt}
+            refSequence={row.original.refSequence}
           />
         ),
       },
       {
-        accessorFn: (originalRow) => originalRow.sequence,
-        id: "sequence",
-        header: "Sequence",
+        accessorFn: (originalRow) => originalRow.length,
+        id: "length",
+        header: "Sequence length",
+        Cell: ({ cell }) => cell.getValue<number>().toLocaleString("en-US"),
       },
       {
-        accessorFn: (originalRow) => originalRow.location,
-        id: "location",
-        header: "Location",
+        accessorFn: (originalRow) => originalRow.gcSkew,
+        id: "gcSkew",
+        header: "GC skew",
+        Cell: ({ cell }) => cell.getValue<number>().toFixed(4),
       },
       {
-        accessorFn: (originalRow) => originalRow.coverage,
-        id: "coverage",
-        header: "AnalysisContainer coverage",
-        Cell: ({ cell }) => (
-          <StatCell label={`${cell.getValue<number>() * 100}%`} />
-        ),
+        accessorFn: (originalRow) => originalRow.gcContent,
+        id: "gcContent",
+        header: "GC content",
+        Cell: ({ cell }) => cell.getValue<number>().toFixed(4),
+      },
+      {
+        accessorFn: (originalRow) => originalRow.updatedAt,
+        id: "updatedAt",
+        header: "Last updated",
+        Cell: ({ cell }) => cell.getValue<string>(),
       },
     ],
     []
@@ -56,6 +61,7 @@ export function BrowseContainer({ data = [], isLoading, isError }: Props) {
       rowNumberMode="original"
       enableTopToolbar
       enableColumnActions={false}
+      enablePagination={false}
       muiTableBodyRowProps={{ hover: true }}
       enableRowSelection={false}
       enableDensityToggle={false}
@@ -66,7 +72,12 @@ export function BrowseContainer({ data = [], isLoading, isError }: Props) {
         showProgressBars: isLoading,
         showAlertBanner: isError,
       }}
-      renderRowActions={() => <BrowseTableActions />}
+      renderRowActions={({ row }) => (
+        <BrowseTableActions
+          chromosome={row.original.name}
+          length={row.original.length}
+        />
+      )}
     />
   );
 }

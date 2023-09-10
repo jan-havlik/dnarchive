@@ -1,5 +1,7 @@
+export const API_URL = "https://dnarchive-server-dervm.ondigitalocean.app/";
+
 export const DRAWER_WIDTH = {
-  OPEN: 250,
+  OPEN: 170,
   CLOSED: 60,
 };
 

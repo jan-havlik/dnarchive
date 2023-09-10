@@ -1,8 +1,8 @@
 import AnalysisContainer from "@components/analysis/AnalysisContainer";
 import { NextPage } from "next";
 
-const Analysis: NextPage = () => {
+const Index: NextPage = () => {
   return <AnalysisContainer />;
 };
 
-export default Analysis;
+export default Index;

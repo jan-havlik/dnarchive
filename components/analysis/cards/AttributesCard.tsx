@@ -1,19 +1,17 @@
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Checkbox from "@mui/material/Checkbox";
+import { FormData } from "@components/analysis/types";
 import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import FormLabel from "@mui/material/FormLabel";
-import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import BaseCard from "./BaseCard";
 
-const AttributesCard = () => {
+type Props = {
+  formData: FormData;
+  setFormData: (formData: FormData) => void;
+};
+
+const AttributesCard = ({ formData, setFormData }: Props) => {
   return (
     <BaseCard minHeight={100}>
       <Stack spacing={2}>
@@ -21,28 +19,24 @@ const AttributesCard = () => {
         <Divider />
 
         <Stack direction="row" spacing={2}>
-          <Stack direction="column" spacing={3}>
-            <TextField
-              size="small"
-              label="Location"
-              id="outlined-required"
-              defaultValue="200-800"
-            />
-            <TextField
-              size="small"
-              label="Length"
-              id="outlined-required"
-              defaultValue="600"
-            />
-          </Stack>
-
-          <FormControl>
-            <FormLabel>Strand</FormLabel>
-            <FormGroup>
-              <FormControlLabel control={<Checkbox />} label="Strand +" />
-              <FormControlLabel control={<Checkbox />} label="Strand -" />
-            </FormGroup>
-          </FormControl>
+          <TextField
+            size="small"
+            label="Start"
+            id="outlined-required"
+            value={formData.start}
+            onChange={(e) =>
+              setFormData({ ...formData, start: parseInt(e.target.value) })
+            }
+          />
+          <TextField
+            size="small"
+            label="End"
+            id="outlined-required"
+            value={formData.end}
+            onChange={(e) =>
+              setFormData({ ...formData, end: parseInt(e.target.value) })
+            }
+          />
         </Stack>
       </Stack>
     </BaseCard>

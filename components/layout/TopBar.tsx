@@ -1,11 +1,6 @@
 import { DRAWER_WIDTH } from "@config";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import SearchIcon from "@mui/icons-material/Search";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { grey } from "@mui/material/colors";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -16,10 +11,6 @@ const SUB_ROUTE = [
   { route: "/", title: "All chromosomes" },
   { route: "/analysis", title: "Analysis" },
   { route: "/contact", title: "Contact" },
-  { route: "/articles", title: "Articles" },
-  { route: "/statistics", title: "Statistics" },
-  { route: "/settings", title: "Settings" },
-  { route: "/support", title: "Support" },
 ];
 
 interface AppBarProps extends MuiAppBarProps {
@@ -82,23 +73,6 @@ function TopBar({ open }: Props) {
         >
           Human genome {subTitle}
         </Typography>
-
-        <Stack direction="row" alignItems="center" gap="5px">
-          <IconButton>
-            <SearchIcon color="action" />
-          </IconButton>
-          <IconButton>
-            <NotificationsIcon color="action" />
-          </IconButton>
-
-          <Typography variant="button" sx={{ flexGrow: 1, color: grey[900] }}>
-            test@test.com
-          </Typography>
-
-          <IconButton>
-            <AccountCircle color="action" />
-          </IconButton>
-        </Stack>
       </Toolbar>
     </AppBar>
   );

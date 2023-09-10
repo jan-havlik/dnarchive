@@ -1,7 +1,6 @@
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import InfoIcon from "@mui/icons-material/Info";
 import { Box, IconButton, Tooltip } from "@mui/material";
+import { useRouter } from "next/router";
 import React, { useMemo } from "react";
 
 type Action = {
@@ -10,13 +9,16 @@ type Action = {
   placement: "left" | "right" | "bottom" | "top";
 };
 
-export function BrowseTableActions() {
+type Props = {
+  chromosome: string;
+  length: number;
+};
+
+export function BrowseTableActions({ chromosome, length }: Props) {
+  const router = useRouter();
+
   const actions: Action[] = useMemo(
-    () => [
-      { tooltip: "Tooltip 1", icon: <CloudDownloadIcon />, placement: "left" },
-      { tooltip: "Tooltip 2", icon: <ZoomInIcon />, placement: "bottom" },
-      { tooltip: "Tooltip 3", icon: <CloudUploadIcon />, placement: "right" },
-    ],
+    () => [{ tooltip: "Tooltip 2", icon: <InfoIcon />, placement: "bottom" }],
     []
   );
 
@@ -24,7 +26,16 @@ export function BrowseTableActions() {
     <Box sx={{ display: "flex" }}>
       {actions.map(({ tooltip, icon, placement }) => (
         <Tooltip key={tooltip} arrow placement={placement} title={tooltip}>
-          <IconButton>{icon}</IconButton>
+          <IconButton
+            onClick={() =>
+              router.push({
+                pathname: "/sequence",
+                query: { chromosome, length },
+              })
+            }
+          >
+            {icon}
+          </IconButton>
         </Tooltip>
       ))}
     </Box>
