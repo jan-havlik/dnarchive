@@ -20,7 +20,7 @@ const SortingInput = ({ title, subtitle }: Props) => {
 
   return (
     <Stack spacing={1} direction="row" alignItems="center">
-      <IconButton aria-label="delete" onClick={handleSetSortDir}>
+      <IconButton disabled aria-label="delete" onClick={handleSetSortDir}>
         {sortDir === "asc" ? (
           <KeyboardArrowDownIcon />
         ) : (
@@ -31,7 +31,7 @@ const SortingInput = ({ title, subtitle }: Props) => {
         <Typography variant="button">{title}</Typography>
         <Typography variant="caption">{subtitle}</Typography>
       </Stack>
-      <Checkbox />
+      <Checkbox disabled />
     </Stack>
   );
 };

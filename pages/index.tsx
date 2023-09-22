@@ -3,11 +3,11 @@ import { trpc } from "@utils/trpc";
 import type { NextPage } from "next";
 
 const Browse: NextPage = () => {
-  const { data, isLoading, isError } = trpc.browse.list.useQuery();
+  const { data, isLoading, isError } = trpc.browse.listChromosomes.useQuery();
 
   return (
     <BrowseContainer
-      data={data?.chromosomes}
+      data={data || []}
       isLoading={isLoading}
       isError={isError}
     />

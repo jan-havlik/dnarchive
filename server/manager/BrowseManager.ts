@@ -1,13 +1,16 @@
+import type { ListAnalysisInput, ListSequenceInput } from "@server/api/schema";
 import { BrowseAdapter } from "@server/manager/adapter/BrowseAdapter";
 
 export class BrowseManager {
-  private chromosomeAdapter = new BrowseAdapter();
-
-  async listChromosomes() {
-    return this.chromosomeAdapter.list();
+  static async listChromosomes() {
+    return BrowseAdapter.listChromosomes();
   }
 
-  async listByName(name: string) {
-    return this.chromosomeAdapter.listByName(name);
+  static async listAnalysis(input: ListAnalysisInput) {
+    return BrowseAdapter.listAnalysis(input);
+  }
+
+  static async listSequence(input: ListSequenceInput) {
+    return BrowseAdapter.listSequence(input);
   }
 }

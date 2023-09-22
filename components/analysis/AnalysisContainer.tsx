@@ -1,15 +1,30 @@
 import G4HunterFilterCard from "@components/analysis/cards/analysis-filter-cards/G4HunterFilterCard";
 import PalindromeFilterCard from "@components/analysis/cards/analysis-filter-cards/PalindromeFilterCard";
-import RloopFilterCard from "@components/analysis/cards/analysis-filter-cards/RloopFilterCard";
 import AttributesCard from "@components/analysis/cards/AttributesCard";
 import ChromosomeSelector from "@components/analysis/cards/ChromosomeSelector";
-import GeneCard from "@components/analysis/cards/GeneCard";
 import SortingCard from "@components/analysis/cards/sorting-card/SortingCard";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const AnalysisContainer = () => {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    threshold: 1.2,
+    windowSize: 20,
+    size: 2,
+    spacer: 20,
+    mismatches: 0,
+    orderBy: ["score"],
+    dir: "desc",
+    start: 50000,
+    end: 400000,
+    chromosome: ["chr1", "chr2"],
+    analysis: "all",
+  });
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} md={9}>
@@ -20,25 +35,31 @@ const AnalysisContainer = () => {
             justifyContent="space-between"
             alignItems="stretch"
           >
-            <G4HunterFilterCard />
-            <RloopFilterCard />
-            <PalindromeFilterCard />
+            <G4HunterFilterCard formData={formData} setFormData={setFormData} />
+            <PalindromeFilterCard
+              formData={formData}
+              setFormData={setFormData}
+            />
           </Stack>
 
-          <SortingCard />
-          <AttributesCard />
-          <GeneCard />
+          <SortingCard formData={formData} setFormData={setFormData} />
+          <AttributesCard formData={formData} setFormData={setFormData} />
         </Stack>
       </Grid>
 
       <Grid item xs>
         <Stack
+          spacing={1}
           sx={{ height: "100%" }}
           direction="column"
           justifyContent="space-between"
         >
-          <ChromosomeSelector />
-          <Button variant="outlined" fullWidth>
+          <ChromosomeSelector formData={formData} setFormData={setFormData} />
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => router.push("/analysis/data/", { query: formData })}
+          >
             Save filter
           </Button>
         </Stack>

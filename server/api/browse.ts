@@ -1,17 +1,17 @@
+import {
+  listAnalysisInputSchema,
+  listSequenceInputSchema,
+} from "@server/api/schema";
 import { BrowseManager } from "@server/manager/BrowseManager";
-import { z } from "zod";
 
 import { baseProcedure, router } from "../trpc";
 
-const browseManager = new BrowseManager();
-
 export const browseApi = router({
-  list: baseProcedure.query(() => browseManager.listChromosomes()),
-  listByName: baseProcedure
-    .input(
-      z.object({
-        name: z.string(),
-      })
-    )
-    .query(({ input }) => browseManager.listByName(input.name)),
+  listChromosomes: baseProcedure.query(() => BrowseManager.listChromosomes()),
+  listAnalysis: baseProcedure
+    .input(listAnalysisInputSchema)
+    .query(({ input }) => BrowseManager.listAnalysis(input)),
+  listSequence: baseProcedure
+    .input(listSequenceInputSchema)
+    .query(({ input }) => BrowseManager.listSequence(input)),
 });

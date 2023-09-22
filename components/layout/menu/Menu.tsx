@@ -1,3 +1,4 @@
+import { DRAWER_WIDTH } from "@config";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
@@ -18,13 +19,6 @@ import Typography from "@mui/material/Typography";
 import { MENU_ITEMS } from "./items";
 import MenuItem from "./MenuItem";
 
-export const DRAWER_DIMENSIONS = {
-  WIDTH: {
-    OPEN: 250,
-    CLOSE: 60,
-  },
-};
-
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -32,7 +26,7 @@ const darkTheme = createTheme({
 });
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: DRAWER_DIMENSIONS.WIDTH.OPEN,
+  width: DRAWER_WIDTH.OPEN,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -46,13 +40,13 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: DRAWER_DIMENSIONS.WIDTH.CLOSE,
+  width: DRAWER_WIDTH.CLOSED,
 });
 
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: DRAWER_DIMENSIONS.WIDTH.OPEN,
+  width: DRAWER_WIDTH.OPEN,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",

@@ -3,14 +3,14 @@ import Typography from "@mui/material/Typography";
 
 type Props = {
   name: string;
-  updatedAt: string;
+  refSequence: string;
 };
 
-export function NameCell({ name, updatedAt }: Props) {
+export function NameCell({ name, refSequence }: Props) {
   return (
     <Stack>
-      <Typography>{name}</Typography>
-      <Typography variant="overline">{`Updated at ${updatedAt}`}</Typography>
+      <Typography>{name} </Typography>
+      <Typography variant="overline">{refSequence}</Typography>
     </Stack>
   );
 }
