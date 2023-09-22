@@ -24,6 +24,7 @@ const AttributesCard = ({ formData, setFormData }: Props) => {
             label="Start"
             id="outlined-required"
             value={formData.start}
+            type="number"
             onChange={(e) =>
               setFormData({ ...formData, start: parseInt(e.target.value) })
             }
@@ -32,6 +33,7 @@ const AttributesCard = ({ formData, setFormData }: Props) => {
             size="small"
             label="End"
             id="outlined-required"
+            type="number"
             value={formData.end}
             onChange={(e) =>
               setFormData({ ...formData, end: parseInt(e.target.value) })
