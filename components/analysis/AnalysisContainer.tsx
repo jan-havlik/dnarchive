@@ -58,7 +58,9 @@ const AnalysisContainer = () => {
           <Button
             variant="outlined"
             fullWidth
-            onClick={() => router.push("/analysis/data/", { query: formData })}
+            onClick={() =>
+              router.push({ pathname: "/analysis/data/", query: formData })
+            }
           >
             Save filter
           </Button>
