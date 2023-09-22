@@ -20,6 +20,7 @@ const G4HunterFilterCard = ({ formData, setFormData }: Props) => {
           size="small"
           label="Threshold"
           id="outlined-required"
+          type="number"
           value={formData.threshold}
           onChange={(event) =>
             setFormData({
@@ -32,6 +33,7 @@ const G4HunterFilterCard = ({ formData, setFormData }: Props) => {
           size="small"
           label="Window size"
           id="outlined-required"
+          type="number"
           value={formData.windowSize}
           onChange={(event) =>
             setFormData({

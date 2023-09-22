@@ -21,6 +21,7 @@ const PalindromeFilterCard = ({ formData, setFormData }: Props) => {
           size="small"
           label="Size"
           id="outlined-required"
+          type="number"
           value={formData.spacer}
           onChange={(event) => {
             setFormData({
@@ -32,6 +33,7 @@ const PalindromeFilterCard = ({ formData, setFormData }: Props) => {
         <TextField
           size="small"
           label="Spacer"
+          type="number"
           id="outlined-required"
           value={formData.spacer}
           onChange={(event) => {
@@ -44,6 +46,7 @@ const PalindromeFilterCard = ({ formData, setFormData }: Props) => {
         <TextField
           size="small"
           label="Mismatches"
+          type="number"
           id="outlined-required"
           value={formData.mismatches}
           onChange={(event) => {
