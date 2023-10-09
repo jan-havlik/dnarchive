@@ -24,16 +24,24 @@ const ChromosomeSelector = (props: Props) => {
     const { checked, name } = event.target;
 
     const normalizedName = name.toLowerCase().split(" ").join("");
+    const selectAll = normalizedName === "all";
 
     if (checked) {
       setFormData({
         ...formData,
-        chromosome: [...chromosome, normalizedName],
+        chromosome: selectAll
+          ? [
+              name,
+              ...CHROMOSOMES.map((c) => c.toLowerCase().split(" ").join("")),
+            ]
+          : [...chromosome, normalizedName],
       });
     } else {
       setFormData({
         ...formData,
-        chromosome: chromosome.filter((c) => c !== normalizedName),
+        chromosome: selectAll
+          ? []
+          : chromosome.filter((c) => c !== normalizedName),
       });
     }
   };
@@ -44,6 +52,22 @@ const ChromosomeSelector = (props: Props) => {
         <Stack spacing={1}>
           <Typography variant="h6">Chromosomes</Typography>
           <Divider />
+          <Stack direction="row" alignItems="center">
+            <FormControlLabel
+              value="start"
+              control={
+                <Switch
+                  name="all"
+                  size="small"
+                  color="primary"
+                  checked={formData.chromosome.includes("all")}
+                  onChange={handleChromosomeSelection}
+                />
+              }
+              label="All"
+              labelPlacement="end"
+            />
+          </Stack>
           {CHROMOSOMES.map((chromosome) => (
             <Stack direction="row" key={chromosome} alignItems="center">
               <FormControlLabel

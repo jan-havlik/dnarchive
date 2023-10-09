@@ -51,7 +51,7 @@ export class BrowseAdapter {
         queries: {
           analysis,
           // @ts-ignore FIXME
-          chromosome,
+          chromosome: chromosome.filter((name) => name !== "all"),
           start,
           end,
           "g4-window": window,
@@ -67,7 +67,7 @@ export class BrowseAdapter {
         queries: {
           analysis,
           // @ts-ignore FIXME
-          chromosome,
+          chromosome: chromosome.filter((name) => name !== "all"),
           start,
           end,
           "palindrome-size": size,
@@ -94,27 +94,11 @@ export class BrowseAdapter {
         mismatches,
       } = input;
 
-      console.log({ input });
-
       const { g4_hunter, palindrome_finder } = await api.getAnalysis({
         queries: {
           analysis,
           // @ts-ignore FIXME
-          chromosome,
-          start,
-          end,
-          "palindrome-size": size,
-          "palindrome-spacer": spacer,
-          "palindrome-mismatches": mismatches,
-          "g4-window": window,
-          "g4-threshold": threshold,
-        },
-      });
-
-      console.log({
-        queries: {
-          analysis,
-          chromosome,
+          chromosome: chromosome.filter((name) => name !== "all"),
           start,
           end,
           "palindrome-size": size,

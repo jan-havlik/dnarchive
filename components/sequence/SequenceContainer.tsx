@@ -1,13 +1,13 @@
 import { BrowseListQueryData } from "@components/types";
-import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
-import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { trpc } from "@utils/trpc";
 import MaterialReactTable, { MRT_ColumnDef } from "material-react-table";
 import { useSearchParams } from "next/navigation";
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Linear, SeqViz } from "seqviz";
 
 // @ts-ignore FIXME
@@ -35,18 +35,18 @@ const SequenceContainer = () => {
   const linear = useRef();
   const searchParams = useSearchParams();
   const chromosome = searchParams.get("chromosome") ?? "";
-  const sequenceLength = searchParams.get("length") ?? "";
 
-  const [start, setStart] = React.useState<number>(0);
+  const [start, setStart] = useState<number>(0);
+  const [end, setEnd] = useState<number>(50_000);
 
-  const handleChange = (event: Event, newValue: number) => {
-    setStart(newValue);
-  };
+  const rangeTooBig = useMemo(() => {
+    return Math.abs(end - start) > 100_000;
+  }, [start, end]);
 
   const { data, isLoading, isError, refetch } =
     trpc.browse.listSequence.useQuery(
-      { chromosome, start, end: start + 100_000 },
-      { enabled: false }
+      { chromosome, start, end },
+      { enabled: !rangeTooBig }
     );
 
   const columns = useMemo<MRT_ColumnDef<BrowseListQueryData[0]>[]>(
@@ -95,38 +95,35 @@ const SequenceContainer = () => {
     <Stack spacing={2}>
       <Typography variant="h6">Sequence range</Typography>
 
-      <Stack direction="row" spacing={2}>
-        <Slider
+      <Stack direction="row" spacing={2} alignItems="center">
+        <TextField
+          size="small"
+          label="From (bp)"
+          id="outlined-required"
+          type="number"
           value={start}
-          // @ts-ignore FIXME
-          onChange={handleChange}
-          min={0}
-          max={parseInt(sequenceLength)}
-          valueLabelDisplay="auto"
-          getAriaValueText={(value) => `${value}bp`}
+          onChange={(event) => setStart(Number(event.target.value))}
         />
-
-        <Button
-          variant="contained"
-          onClick={() =>
-            refetch({
-              // @ts-ignore FIXME
-              chromosome,
-              start,
-              end: start + 100_000,
-            })
-          }
-        >
-          Load
-        </Button>
+        <TextField
+          size="small"
+          label="To (bp)"
+          id="outlined-required"
+          type="number"
+          value={end}
+          onChange={(event) => setEnd(Number(event.target.value))}
+        />
+        {rangeTooBig && (
+          <Typography variant="body2" color="error">
+            The range is too big, please decrease the range. Maximum range is
+            100 000 bp.
+          </Typography>
+        )}
       </Stack>
 
       <Paper elevation={1} style={{ padding: 10, height: 500 }}>
-        {!data?.sequence.length ? (
+        {!data?.sequence.length && !rangeTooBig ? (
           <Stack alignItems="center" justifyContent="center" height="100%">
-            <Typography variant="h6">
-              No data ... (hit reload button)
-            </Typography>
+            <CircularProgress />
           </Stack>
         ) : (
           <SeqViz
