@@ -9,22 +9,14 @@ const lisAnalysisBaseSchema = z.object({
 });
 
 const listAnalysisG4HunterSchema = z.object({
-  analysis: z.enum(["g4", "all"]),
+  analysis: z.enum(["g4"]),
   threshold: z.number().optional(),
   window: z.number().optional(),
 });
 
-const listAnalysisPalindromeSchema = z.object({
-  analysis: z.enum(["palindrome", "all"]),
-  size: z.number().optional(),
-  spacer: z.number().optional(),
-  mismatches: z.number().optional(),
-});
-
-export const listAnalysisInputSchema = z.union([
-  listAnalysisG4HunterSchema.merge(lisAnalysisBaseSchema),
-  listAnalysisPalindromeSchema.merge(lisAnalysisBaseSchema),
-]);
+export const listAnalysisInputSchema = listAnalysisG4HunterSchema.merge(
+  lisAnalysisBaseSchema
+);
 
 export type ListAnalysisInput = z.infer<typeof listAnalysisInputSchema>;
 
