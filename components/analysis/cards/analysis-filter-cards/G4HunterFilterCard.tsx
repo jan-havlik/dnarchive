@@ -22,25 +22,19 @@ const G4HunterFilterCard = ({ formData, setFormData }: Props) => {
           id="outlined-required"
           type="number"
           value={formData.threshold}
-          onChange={(event) =>
-            setFormData({
-              ...formData,
-              threshold: Number(event.target.value),
-            })
-          }
-        />
-        <TextField
-          size="small"
-          label="Window size"
-          id="outlined-required"
-          type="number"
-          value={formData.windowSize}
-          onChange={(event) =>
-            setFormData({
-              ...formData,
-              windowSize: Number(event.target.value),
-            })
-          }
+          inputProps={{
+            step: 0.1,
+          }}
+          onChange={(event) => {
+            const newThreshold = Number(event.target.value);
+
+            if (1.2 <= newThreshold && newThreshold <= 4.0) {
+              setFormData({
+                ...formData,
+                threshold: Number(event.target.value),
+              });
+            }
+          }}
         />
       </Stack>
     </BaseCard>

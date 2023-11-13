@@ -13,7 +13,7 @@ const AnalysisContainer = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     threshold: 1.2,
-    windowSize: 20,
+    windowSize: 25,
     orderBy: ["score"],
     dir: "desc",
     start: 50000,

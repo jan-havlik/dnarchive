@@ -18,11 +18,11 @@ const SortingCard = ({ formData, setFormData }: Props) => {
         <Typography variant="h6">Sort by</Typography>
         <Divider />
         <Stack direction="row" alignItems="start">
-          <Stack direction="column">
+          <Stack direction="column" spacing={2}>
             <SortingInput title="G4Hunter score" subtitle="(individual)" />
             <SortingInput title="G4Hunter score" subtitle="(grouped)" />
+            <SortingInput title="Quadruplex lenght" />
           </Stack>
-          <SortingInput title="Position" />
         </Stack>
       </Stack>
     </BaseCard>

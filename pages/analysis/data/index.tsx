@@ -16,7 +16,7 @@ const AnalysisData: NextPage = () => {
     chromosome,
     start: start ? parseInt(start) : 0,
     end: end ? parseInt(end) : 100,
-    window: windowSize ? parseInt(windowSize) : 20,
+    window: windowSize ? parseInt(windowSize) : 25,
     dir: "asc",
     sortBy: "score",
     threshold: threshold ? parseFloat(threshold) : 1.2,
