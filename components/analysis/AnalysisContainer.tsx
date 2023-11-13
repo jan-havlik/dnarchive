@@ -1,8 +1,8 @@
 import G4HunterFilterCard from "@components/analysis/cards/analysis-filter-cards/G4HunterFilterCard";
-import PalindromeFilterCard from "@components/analysis/cards/analysis-filter-cards/PalindromeFilterCard";
 import AttributesCard from "@components/analysis/cards/AttributesCard";
 import ChromosomeSelector from "@components/analysis/cards/ChromosomeSelector";
 import SortingCard from "@components/analysis/cards/sorting-card/SortingCard";
+import type { FormData } from "@components/analysis/types";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -11,18 +11,15 @@ import { useState } from "react";
 
 const AnalysisContainer = () => {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     threshold: 1.2,
     windowSize: 20,
-    size: 2,
-    spacer: 20,
-    mismatches: 0,
     orderBy: ["score"],
     dir: "desc",
     start: 50000,
     end: 400000,
     chromosome: ["chr1", "chr2"],
-    analysis: "all",
+    analysis: "g4",
   });
 
   return (
@@ -36,13 +33,8 @@ const AnalysisContainer = () => {
             alignItems="stretch"
           >
             <G4HunterFilterCard formData={formData} setFormData={setFormData} />
-            <PalindromeFilterCard
-              formData={formData}
-              setFormData={setFormData}
-            />
+            <SortingCard formData={formData} setFormData={setFormData} />
           </Stack>
-
-          <SortingCard formData={formData} setFormData={setFormData} />
           <AttributesCard formData={formData} setFormData={setFormData} />
         </Stack>
       </Grid>

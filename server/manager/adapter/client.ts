@@ -13,16 +13,6 @@ const analysisResultSchema = z.object({
       sub_score: z.number(),
     })
   ),
-  palindrome_finder: z.array(
-    z.object({
-      sequence: z.string(),
-      spacer: z.number(),
-      length: z.number(),
-      spacer_length: z.number(),
-      mismatch_count: z.number(),
-      position: z.number(),
-    })
-  ),
 });
 
 export type AnalysisResult = z.infer<typeof analysisResultSchema>;
@@ -51,16 +41,6 @@ export const api = new Zodios(
               sub_score: z.number(),
             })
           ),
-          palindrome_finder: z.array(
-            z.object({
-              sequence: z.string(),
-              spacer: z.number(),
-              length: z.number(),
-              spacer_length: z.number(),
-              mismatch_count: z.number(),
-              position: z.number(),
-            })
-          ),
         }),
         sequence: z.array(z.string()),
       }),
@@ -74,28 +54,13 @@ export const api = new Zodios(
         {
           name: "analysis",
           type: "Query",
-          schema: z.enum(["g4", "all", "palindrome"]),
+          schema: z.enum(["g4"]),
         },
         { name: "chromosome", type: "Query", schema: z.string() },
         { name: "start", type: "Query", schema: z.number() },
         { name: "end", type: "Query", schema: z.number() },
         { name: "g4-threshold", type: "Query", schema: z.number().optional() },
         { name: "g4-window", type: "Query", schema: z.number().optional() },
-        {
-          name: "palindrome-size",
-          type: "Query",
-          schema: z.number().optional(),
-        },
-        {
-          name: "palindrome-spacer",
-          type: "Query",
-          schema: z.number().optional(),
-        },
-        {
-          name: "palindrome-mismatches",
-          type: "Query",
-          schema: z.number().optional(),
-        },
       ],
       response: analysisResultSchema,
       status: 200,

@@ -3,26 +3,12 @@ import type { ListAnalysisInput, ListSequenceInput } from "@server/api/schema";
 import type { AnalysisResult } from "./client";
 import { api } from "./client";
 
-function mapAnalysisResults(
-  originalG4Hunter: AnalysisResult["g4_hunter"],
-  originalPalindromeFinder: AnalysisResult["palindrome_finder"]
-) {
+function mapAnalysisResults(originalG4Hunter: AnalysisResult["g4_hunter"]) {
   return {
-    ...(originalG4Hunter && {
-      g4Hunter: originalG4Hunter.map(({ sub_score, ...rest }) => ({
-        ...rest,
-        subScore: sub_score,
-      })),
-    }),
-    ...(originalPalindromeFinder && {
-      palindromeFinder: originalPalindromeFinder.map(
-        ({ mismatch_count, spacer_length, ...rest }) => ({
-          ...rest,
-          spacerLength: spacer_length,
-          mismatchCount: mismatch_count,
-        })
-      ),
-    }),
+    g4Hunter: originalG4Hunter.map(({ sub_score, ...rest }) => ({
+      ...rest,
+      subScore: sub_score,
+    })),
   };
 }
 
@@ -42,75 +28,20 @@ export class BrowseAdapter {
   }
 
   static async listAnalysis(input: ListAnalysisInput) {
-    const { analysis } = input;
+    const { analysis, chromosome, start, end, window, threshold } = input;
 
-    if (analysis === "g4") {
-      const { chromosome, start, end, window, threshold } = input;
-
-      const { g4_hunter = [] } = await api.getAnalysis({
-        queries: {
-          analysis,
-          // @ts-ignore FIXME
-          chromosome: chromosome.filter((name) => name !== "all"),
-          start,
-          end,
-          "g4-window": window,
-          "g4-threshold": threshold,
-        },
-      });
-
-      return mapAnalysisResults(g4_hunter, []);
-    } else if (analysis === "palindrome") {
-      const { chromosome, start, end, size, spacer, mismatches } = input;
-
-      const { palindrome_finder = [] } = await api.getAnalysis({
-        queries: {
-          analysis,
-          // @ts-ignore FIXME
-          chromosome: chromosome.filter((name) => name !== "all"),
-          start,
-          end,
-          "palindrome-size": size,
-          "palindrome-spacer": spacer,
-          "palindrome-mismatches": mismatches,
-        },
-      });
-
-      return mapAnalysisResults([], palindrome_finder);
-    } else if (analysis === "all") {
-      const {
+    const { g4_hunter = [] } = await api.getAnalysis({
+      queries: {
+        analysis,
+        // @ts-ignore FIXME
         chromosome,
         start,
         end,
-        // @ts-ignore FIXME
-        window,
-        // @ts-ignore FIXME
-        threshold,
-        // @ts-ignore FIXME
-        size,
-        // @ts-ignore FIXME
-        spacer,
-        // @ts-ignore FIXME
-        mismatches,
-      } = input;
-
-      const { g4_hunter, palindrome_finder } = await api.getAnalysis({
-        queries: {
-          analysis,
-          // @ts-ignore FIXME
-          chromosome: chromosome.filter((name) => name !== "all"),
-          start,
-          end,
-          "palindrome-size": size,
-          "palindrome-spacer": spacer,
-          "palindrome-mismatches": mismatches,
-          "g4-window": window,
-          "g4-threshold": threshold,
-        },
-      });
-
-      return mapAnalysisResults(g4_hunter, palindrome_finder);
-    }
+        "g4-window": window,
+        "g4-threshold": threshold,
+      },
+    });
+    return mapAnalysisResults(g4_hunter);
   }
 
   static async listSequence(input: ListSequenceInput) {
@@ -121,10 +52,11 @@ export class BrowseAdapter {
     });
 
     const {
-      analysis: { g4_hunter = [], palindrome_finder = [] },
+      analysis: { g4_hunter = [] },
       sequence = "",
     } = items;
-    const mappedAnalysis = mapAnalysisResults(g4_hunter, palindrome_finder);
+
+    const mappedAnalysis = mapAnalysisResults(g4_hunter);
 
     return { ...mappedAnalysis, sequence };
   }

@@ -53,48 +53,6 @@ const AnalysisContainer = ({ data, isLoading, isError }: Props) => {
     []
   );
 
-  const palindromeColumns = useMemo<MRT_ColumnDef<BrowseListQueryData[0]>[]>(
-    () => [
-      {
-        accessorFn: (originalRow) => originalRow.sequence,
-        id: "sequence",
-        header: "Sequence",
-        Cell: ({ cell }) => cell.getValue<string>(),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.position,
-        id: "position",
-        header: "Position",
-        Cell: ({ cell }) => cell.getValue<number>(),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.mismatchCount,
-        id: "mismatchCount",
-        header: "Mismatch Count",
-        Cell: ({ cell }) => cell.getValue<number>(),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.length,
-        id: "length",
-        header: "Length",
-        Cell: ({ cell }) => cell.getValue<number>(),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.spacer,
-        id: "spacer",
-        header: "Spacer",
-        Cell: ({ cell }) => cell.getValue<string>(),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.spacerLength,
-        id: "spacerLength",
-        header: "Spacer Length",
-        Cell: ({ cell }) => cell.getValue<number>(),
-      },
-    ],
-    []
-  );
-
   return (
     <Stack direction="column" spacing={2}>
       <Typography variant="h6">G4Hunter</Typography>
@@ -103,27 +61,6 @@ const AnalysisContainer = ({ data, isLoading, isError }: Props) => {
         columns={g4Columns}
         // @ts-ignore FIXME
         data={data?.g4Hunter ?? []}
-        rowNumberMode="original"
-        enableTopToolbar={false}
-        enableColumnActions={false}
-        enablePagination={false}
-        enableRowSelection={false}
-        enableDensityToggle={false}
-        enableFullScreenToggle={false}
-        enableRowActions={false}
-        state={{
-          isLoading,
-          showProgressBars: isLoading,
-          showAlertBanner: isError,
-        }}
-      />
-
-      <Typography variant="h6">Palindrome</Typography>
-
-      <MaterialReactTable
-        columns={palindromeColumns}
-        // @ts-ignore FIXME
-        data={data?.palindromeFinder ?? []}
         rowNumberMode="original"
         enableTopToolbar={false}
         enableColumnActions={false}

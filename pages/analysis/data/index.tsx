@@ -8,20 +8,14 @@ const AnalysisData: NextPage = () => {
   const chromosome = searchParams.getAll("chromosome");
   const start = searchParams.get("start");
   const end = searchParams.get("end");
-  const mismatches = searchParams.get("mismatches");
-  const spacer = searchParams.get("spacer");
-  const size = searchParams.get("size");
   const windowSize = searchParams.get("windowSize");
   const threshold = searchParams.get("threshold");
 
   const { data, isLoading, isError } = trpc.browse.listAnalysis.useQuery({
-    analysis: "all",
+    analysis: "g4",
     chromosome,
     start: start ? parseInt(start) : 0,
     end: end ? parseInt(end) : 100,
-    mismatches: mismatches ? parseInt(mismatches) : 0,
-    spacer: spacer ? parseInt(spacer) : 20,
-    size: size ? parseInt(size) : 2,
     window: windowSize ? parseInt(windowSize) : 20,
     dir: "asc",
     sortBy: "score",
