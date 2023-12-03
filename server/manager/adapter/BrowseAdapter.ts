@@ -1,36 +1,23 @@
 import type { ListAnalysisInput, ListSequenceInput } from "@server/api/schema";
 
-import type { AnalysisResult } from "./client";
 import { api } from "./client";
-
-function mapAnalysisResults(originalG4Hunter: AnalysisResult["g4_hunter"]) {
-  return {
-    g4Hunter: originalG4Hunter.map(({ sub_score, ...rest }) => ({
-      ...rest,
-      subScore: sub_score,
-    })),
-  };
-}
 
 export class BrowseAdapter {
   static async listChromosomes() {
     const items = await api.getChromosomes();
 
-    return items.map(
-      ({ ref_seq, updated_at, gc_skew, gc_content, ...rest }) => ({
-        refSequence: ref_seq,
-        updatedAt: updated_at,
-        gcSkew: gc_skew,
-        gcContent: gc_content,
-        ...rest,
-      })
-    );
+    return items.map(({ ref_seq, updated_at, g4_count, ...rest }) => ({
+      refSequence: ref_seq,
+      updatedAt: updated_at,
+      g4Count: g4_count,
+      ...rest,
+    }));
   }
 
   static async listAnalysis(input: ListAnalysisInput) {
     const { analysis, chromosome, start, end, window, threshold } = input;
 
-    const { g4_hunter = [] } = await api.getAnalysis({
+    const results = await api.getAnalysis({
       queries: {
         analysis,
         // @ts-ignore FIXME
@@ -41,7 +28,12 @@ export class BrowseAdapter {
         "g4-threshold": threshold,
       },
     });
-    return mapAnalysisResults(g4_hunter);
+
+    return results.map(({ sub_score, abs_score, ...rest }) => ({
+      ...rest,
+      absScore: abs_score,
+      subScore: sub_score,
+    }));
   }
 
   static async listSequence(input: ListSequenceInput) {
@@ -51,12 +43,15 @@ export class BrowseAdapter {
       queries: { chromosome, start, end },
     });
 
-    const {
-      analysis: { g4_hunter = [] },
-      sequence = "",
-    } = items;
+    const { analysis, sequence = "" } = items;
 
-    const mappedAnalysis = mapAnalysisResults(g4_hunter);
+    const mappedAnalysis = {
+      g4Hunter: analysis.map(({ sub_score, abs_score, ...rest }) => ({
+        ...rest,
+        absScore: abs_score,
+        subScore: sub_score,
+      })),
+    };
 
     return { ...mappedAnalysis, sequence };
   }

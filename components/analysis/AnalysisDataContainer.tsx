@@ -14,10 +14,10 @@ const AnalysisContainer = ({ data, isLoading, isError }: Props) => {
   const g4Columns = useMemo<MRT_ColumnDef<BrowseListQueryData[0]>[]>(
     () => [
       {
-        accessorFn: (originalRow) => originalRow.id,
-        id: "id",
-        header: "ID",
-        Cell: ({ cell }) => cell.getValue<number>(),
+        accessorFn: (originalRow) => originalRow.chromosome,
+        id: "chromosome",
+        header: "Chromosome",
+        Cell: ({ cell }) => cell.getValue<string>(),
       },
       {
         accessorFn: (originalRow) => originalRow.sequence,
@@ -32,22 +32,22 @@ const AnalysisContainer = ({ data, isLoading, isError }: Props) => {
         Cell: ({ cell }) => cell.getValue<number>(),
       },
       {
-        accessorFn: (originalRow) => originalRow.score,
-        id: "score",
-        header: "Score",
-        Cell: ({ cell }) => cell.getValue<number>().toFixed(4),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.sub_score,
-        id: "sub_score",
-        header: "Sub Score",
-        Cell: ({ cell }) => cell.getValue<string>(),
-      },
-      {
         accessorFn: (originalRow) => originalRow.position,
         id: "position",
         header: "Position",
         Cell: ({ cell }) => cell.getValue<number>(),
+      },
+      {
+        accessorFn: (originalRow) => originalRow.score,
+        id: "score",
+        header: "Score",
+        Cell: ({ cell }) => cell.getValue<number>().toFixed(2),
+      },
+      {
+        accessorFn: (originalRow) => originalRow.absScore,
+        id: "abs_score",
+        header: "Abs Score",
+        Cell: ({ cell }) => cell.getValue<number>().toFixed(2),
       },
     ],
     []
@@ -60,7 +60,7 @@ const AnalysisContainer = ({ data, isLoading, isError }: Props) => {
       <MaterialReactTable
         columns={g4Columns}
         // @ts-ignore FIXME
-        data={data?.g4Hunter ?? []}
+        data={data ?? []}
         rowNumberMode="original"
         enableTopToolbar={false}
         enableColumnActions={false}

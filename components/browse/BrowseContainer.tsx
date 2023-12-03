@@ -33,16 +33,10 @@ export function BrowseContainer({ data = [], isLoading, isError }: Props) {
         Cell: ({ cell }) => cell.getValue<number>().toLocaleString("en-US"),
       },
       {
-        accessorFn: (originalRow) => originalRow.gcSkew,
-        id: "gcSkew",
-        header: "GC skew",
-        Cell: ({ cell }) => cell.getValue<number>().toFixed(4),
-      },
-      {
-        accessorFn: (originalRow) => originalRow.gcContent,
-        id: "gcContent",
-        header: "GC content",
-        Cell: ({ cell }) => cell.getValue<number>().toFixed(4),
+        accessorFn: (originalRow) => originalRow.g4Count,
+        id: "g4Count",
+        header: "PQS count",
+        Cell: ({ cell }) => cell.getValue<number>(),
       },
       {
         accessorFn: (originalRow) => originalRow.updatedAt,

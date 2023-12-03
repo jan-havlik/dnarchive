@@ -23,12 +23,12 @@ const G4HunterFilterCard = ({ formData, setFormData }: Props) => {
           type="number"
           value={formData.threshold}
           inputProps={{
-            step: 0.1,
+            step: 0.2,
           }}
           onChange={(event) => {
             const newThreshold = Number(event.target.value);
 
-            if (1.2 <= newThreshold && newThreshold <= 4.0) {
+            if (1.2 <= newThreshold && newThreshold <= 3.8) {
               setFormData({
                 ...formData,
                 threshold: Number(event.target.value),
