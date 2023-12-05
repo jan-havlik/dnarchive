@@ -14,4 +14,5 @@ export const browseApi = router({
   listSequence: baseProcedure
     .input(listSequenceInputSchema)
     .query(({ input }) => BrowseManager.listSequence(input)),
+  getStatistics: baseProcedure.query(() => BrowseManager.getStatistics()),
 });

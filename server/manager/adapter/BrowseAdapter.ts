@@ -55,4 +55,8 @@ export class BrowseAdapter {
 
     return { ...mappedAnalysis, sequence };
   }
+
+  static async getStatistics() {
+    return api.getStatistics();
+  }
 }

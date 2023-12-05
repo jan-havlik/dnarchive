@@ -10,6 +10,7 @@ import React, { useMemo } from "react";
 const SUB_ROUTE = [
   { route: "/", title: "All chromosomes" },
   { route: "/analysis", title: "Analysis" },
+  { route: "/statistics", title: "Statistics" },
   { route: "/contact", title: "Contact" },
 ];
 

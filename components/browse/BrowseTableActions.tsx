@@ -18,25 +18,24 @@ export function BrowseTableActions({ chromosome, length }: Props) {
   const router = useRouter();
 
   const actions: Action[] = useMemo(
-    () => [{ tooltip: "Tooltip 2", icon: <InfoIcon />, placement: "bottom" }],
+    () => [{ icon: <InfoIcon />, placement: "bottom" }],
     []
   );
 
   return (
     <Box sx={{ display: "flex" }}>
-      {actions.map(({ tooltip, icon, placement }) => (
-        <Tooltip key={tooltip} arrow placement={placement} title={tooltip}>
-          <IconButton
-            onClick={() =>
-              router.push({
-                pathname: "/sequence",
-                query: { chromosome, length },
-              })
-            }
-          >
-            {icon}
-          </IconButton>
-        </Tooltip>
+      {actions.map(({ icon, placement }, index) => (
+        <IconButton
+          key={index}
+          onClick={() =>
+            router.push({
+              pathname: "/sequence",
+              query: { chromosome, length },
+            })
+          }
+        >
+          {icon}
+        </IconButton>
       ))}
     </Box>
   );
