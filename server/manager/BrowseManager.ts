@@ -13,4 +13,8 @@ export class BrowseManager {
   static async listSequence(input: ListSequenceInput) {
     return BrowseAdapter.listSequence(input);
   }
+
+  static async getStatistics() {
+    return BrowseAdapter.getStatistics();
+  }
 }

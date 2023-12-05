@@ -5,3 +5,8 @@ export type BrowseListQueryData = inferProcedureOutput<
   // @ts-ignore FIXME
   AppRouter["browse"]["list"]
 >["chromosomes"];
+
+export type StatisticsQueryData = inferProcedureOutput<
+  // @ts-ignore FIXME
+  AppRouter["statistics"]["list"]
+>["data"];
