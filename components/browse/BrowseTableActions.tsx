@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import React, { useMemo } from "react";
 
 type Action = {
-  tooltip: string;
   icon: React.ReactNode;
   placement: "left" | "right" | "bottom" | "top";
 };
