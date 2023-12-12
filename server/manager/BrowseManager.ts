@@ -17,4 +17,8 @@ export class BrowseManager {
   static async getStatistics() {
     return BrowseAdapter.getStatistics();
   }
+
+  static async getGenes() {
+    return BrowseAdapter.getGenes();
+  }
 }

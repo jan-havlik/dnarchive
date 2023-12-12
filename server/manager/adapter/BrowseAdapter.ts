@@ -48,7 +48,7 @@ export class BrowseAdapter {
     const { analysis, sequence = "" } = items;
 
     const mappedAnalysis = {
-      g4Hunter: analysis.map(({ sub_score, abs_score, ...rest }) => ({
+      g4Hunter: analysis[0].result.map(({ sub_score, abs_score, ...rest }) => ({
         ...rest,
         absScore: abs_score,
         subScore: sub_score,
@@ -60,5 +60,9 @@ export class BrowseAdapter {
 
   static async getStatistics() {
     return api.getStatistics();
+  }
+
+  static async getGenes() {
+    return api.getGenes();
   }
 }

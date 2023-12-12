@@ -1,6 +1,7 @@
 import G4HunterFilterCard from "@components/analysis/cards/analysis-filter-cards/G4HunterFilterCard";
 import AttributesCard from "@components/analysis/cards/AttributesCard";
 import ChromosomeSelector from "@components/analysis/cards/ChromosomeSelector";
+import GeneCard from "@components/analysis/cards/GeneCard";
 import SortingCard from "@components/analysis/cards/sorting-card/SortingCard";
 import type { FormData } from "@components/analysis/types";
 import { CHROMOSOMES } from "@config";
@@ -40,7 +41,10 @@ const AnalysisContainer = () => {
             <G4HunterFilterCard formData={formData} setFormData={setFormData} />
             <SortingCard formData={formData} setFormData={setFormData} />
           </Stack>
-          <AttributesCard formData={formData} setFormData={setFormData} />
+          <Stack direction="row" spacing={1}>
+            <AttributesCard formData={formData} setFormData={setFormData} />
+            <GeneCard formData={formData} setFormData={setFormData} />
+          </Stack>
         </Stack>
       </Grid>
 

@@ -17,17 +17,27 @@ export const api = new Zodios(
       response: z.object({
         analysis: z.array(
           z.object({
-            abs_score: z.number(),
-            chromosome: z.string(),
-            length: z.number(),
-            position: z.number(),
-            score: z.number(),
-            sequence: z.string(),
-            sub_score: z.number(),
-            threshold: z.number(),
+            result: z.array(
+              z.object({
+                abs_score: z.number(),
+                chromosome: z.string(),
+                length: z.number(),
+                position: z.number(),
+                score: z.number(),
+                sequence: z.string(),
+                sub_score: z.number(),
+                threshold: z.number(),
+              })
+            ),
           })
         ),
         sequence: z.array(z.string()),
+        settings: z.object({
+          total: z.number(),
+          freq_per_1k: z.number(),
+          window_size: z.number(),
+          threshold: z.number(),
+        }),
       }),
       status: 200,
     },
@@ -130,6 +140,20 @@ export const api = new Zodios(
           name: z.string(),
           ref_seq: z.string(),
           updated_at: z.string(),
+        })
+      ),
+      status: 200,
+    },
+    {
+      method: "get",
+      path: "/genes",
+      alias: "getGenes",
+      response: z.array(
+        z.object({
+          name: z.string(),
+          start: z.number(),
+          end: z.number(),
+          chromosome: z.string(),
         })
       ),
       status: 200,
