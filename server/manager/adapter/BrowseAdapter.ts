@@ -17,23 +17,25 @@ export class BrowseAdapter {
   static async listAnalysis(input: ListAnalysisInput) {
     const { analysis, chromosome, start, end, window, threshold } = input;
 
-    const results = await api.getAnalysis({
+    const { result, settings } = await api.getAnalysis({
       queries: {
         analysis,
-        // @ts-ignore FIXME
-        chromosome,
+        chromosomes: chromosome.join(","),
         start,
         end,
-        "g4-window": window,
-        "g4-threshold": threshold,
+        window,
+        threshold,
       },
     });
 
-    return results.map(({ sub_score, abs_score, ...rest }) => ({
-      ...rest,
-      absScore: abs_score,
-      subScore: sub_score,
-    }));
+    return {
+      items: result.map(({ sub_score, abs_score, ...rest }) => ({
+        ...rest,
+        absScore: abs_score,
+        subScore: sub_score,
+      })),
+      settings,
+    };
   }
 
   static async listSequence(input: ListSequenceInput) {

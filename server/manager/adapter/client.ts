@@ -41,24 +41,31 @@ export const api = new Zodios(
           type: "Query",
           schema: z.enum(["g4"]),
         },
-        { name: "chromosome", type: "Query", schema: z.string() },
+        { name: "chromosomes", type: "Query", schema: z.string() },
         { name: "start", type: "Query", schema: z.number() },
         { name: "end", type: "Query", schema: z.number() },
-        { name: "g4-threshold", type: "Query", schema: z.number().optional() },
-        { name: "g4-window", type: "Query", schema: z.number().optional() },
+        { name: "threshold", type: "Query", schema: z.number().optional() },
+        { name: "window", type: "Query", schema: z.number().optional() },
       ],
-      response: z.array(
-        z.object({
-          abs_score: z.number(),
-          chromosome: z.string(),
-          length: z.number(),
-          position: z.number(),
-          score: z.number(),
-          sequence: z.string(),
-          sub_score: z.number(),
-        })
-      ),
-      status: 200,
+      response: z.object({
+        result: z.array(
+          z.object({
+            abs_score: z.number(),
+            chromosome: z.string(),
+            length: z.number(),
+            position: z.number(),
+            score: z.number(),
+            sequence: z.string(),
+            sub_score: z.number(),
+          })
+        ),
+        settings: z.object({
+          total: z.number(),
+          freq_per_1k: z.number(),
+          window_size: z.number(),
+          threshold: z.number(),
+        }),
+      }),
     },
     {
       method: "get",

@@ -3,6 +3,7 @@ import AttributesCard from "@components/analysis/cards/AttributesCard";
 import ChromosomeSelector from "@components/analysis/cards/ChromosomeSelector";
 import SortingCard from "@components/analysis/cards/sorting-card/SortingCard";
 import type { FormData } from "@components/analysis/types";
+import { CHROMOSOMES } from "@config";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -16,15 +17,19 @@ const AnalysisContainer = () => {
     windowSize: 25,
     orderBy: ["score"],
     dir: "desc",
-    start: 50000,
-    end: 400000,
-    chromosome: ["chr1", "chr2"],
+    start: 1,
+    end: 100_000,
+    chromosome: [
+      ...CHROMOSOMES.map((chromosome) =>
+        chromosome.toLowerCase().split(" ").join("")
+      ),
+    ],
     analysis: "g4",
   });
 
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12} md={9}>
+      <Grid item xs={12} sm={12} md={12} lg={8}>
         <Stack direction="column" spacing={1}>
           <Stack
             spacing={1}

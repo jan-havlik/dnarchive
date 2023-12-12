@@ -27,7 +27,9 @@ const AnalysisData: NextPage = () => {
       isLoading={isLoading}
       isError={isError}
       // @ts-ignore FIXME
-      data={data}
+      items={data?.items ?? []}
+      // @ts-ignore FIXME
+      settings={data?.settings ?? {}}
     />
   );
 };
