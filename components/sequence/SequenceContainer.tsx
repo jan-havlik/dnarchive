@@ -19,7 +19,7 @@ function mapToAnnotations(start, g4Hunter, palindromeAnalysis) {
   const g4Annotations = g4Hunter.map(({ position, length }) => ({
     start: position - start,
     end: position + length - start,
-    name: "quadruplex",
+    name: "PQS",
   }));
 
   const palindromeAnnotations = palindromeAnalysis.map(

@@ -12,6 +12,12 @@ type Props = {
 };
 
 const SortingCard = ({ formData, setFormData }: Props) => {
+  const handleOrderBy = (orderBy: string, dir: "asc" | "desc") => {
+    setFormData({ ...formData, orderBy: [orderBy], dir });
+  };
+
+  console.log({ formData });
+
   return (
     <BaseCard minHeight={100}>
       <Stack spacing={2}>
@@ -19,9 +25,25 @@ const SortingCard = ({ formData, setFormData }: Props) => {
         <Divider />
         <Stack direction="row" alignItems="start">
           <Stack direction="column" spacing={2}>
-            <SortingInput title="G4Hunter score" subtitle="(individual)" />
-            <SortingInput title="G4Hunter score" subtitle="(grouped)" />
-            <SortingInput title="Quadruplex lenght" />
+            <SortingInput
+              checked={formData.orderBy[0] === "position"}
+              title="G4Hunter position"
+              orderBy="position"
+              onOrderByChange={handleOrderBy}
+            />
+            <SortingInput
+              checked={formData.orderBy[0] === "score"}
+              title="G4Hunter score"
+              subtitle="(grouped)"
+              orderBy="score"
+              onOrderByChange={handleOrderBy}
+            />
+            <SortingInput
+              checked={formData.orderBy[0] === "spacer_length"}
+              title="Quadruplex lenght"
+              orderBy="spacer_length"
+              onOrderByChange={handleOrderBy}
+            />
           </Stack>
         </Stack>
       </Stack>

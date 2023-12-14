@@ -15,7 +15,8 @@ export class BrowseAdapter {
   }
 
   static async listAnalysis(input: ListAnalysisInput) {
-    const { analysis, chromosome, start, end, window, threshold } = input;
+    const { analysis, chromosome, start, end, window, threshold, sortBy, dir } =
+      input;
 
     const { result, settings } = await api.getAnalysis({
       queries: {
@@ -25,6 +26,7 @@ export class BrowseAdapter {
         end,
         window,
         threshold,
+        sort_by: `${sortBy},${dir}`,
       },
     });
 
@@ -48,7 +50,7 @@ export class BrowseAdapter {
     const { analysis, sequence = "" } = items;
 
     const mappedAnalysis = {
-      g4Hunter: analysis[0].result.map(({ sub_score, abs_score, ...rest }) => ({
+      g4Hunter: analysis.map(({ sub_score, abs_score, ...rest }) => ({
         ...rest,
         absScore: abs_score,
         subScore: sub_score,

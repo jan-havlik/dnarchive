@@ -17,18 +17,14 @@ export const api = new Zodios(
       response: z.object({
         analysis: z.array(
           z.object({
-            result: z.array(
-              z.object({
-                abs_score: z.number(),
-                chromosome: z.string(),
-                length: z.number(),
-                position: z.number(),
-                score: z.number(),
-                sequence: z.string(),
-                sub_score: z.number(),
-                threshold: z.number(),
-              })
-            ),
+            abs_score: z.number(),
+            chromosome: z.string(),
+            length: z.number(),
+            position: z.number(),
+            score: z.number(),
+            sequence: z.string(),
+            sub_score: z.number(),
+            threshold: z.number(),
           })
         ),
         sequence: z.array(z.string()),
@@ -56,6 +52,7 @@ export const api = new Zodios(
         { name: "end", type: "Query", schema: z.number() },
         { name: "threshold", type: "Query", schema: z.number().optional() },
         { name: "window", type: "Query", schema: z.number().optional() },
+        { name: "sort_by", type: "Query", schema: z.string().optional() },
       ],
       response: z.object({
         result: z.array(
