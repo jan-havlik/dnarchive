@@ -14,7 +14,8 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import Image from "next/image";
+import Logo from './logo.png';
 
 import { MENU_ITEMS } from "./items";
 import MenuItem from "./MenuItem";
@@ -79,12 +80,7 @@ export default function Menu({ open, onDrawerOpen }: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="button"
-            sx={{ ...(!open && { display: "none" }) }}
-          >
-            Logo
-          </Typography>
+          <Image src={Logo} alt="Logo" width={80} height={80 * 358 / 647} style={{ marginLeft: "15px", ...(!open && { display: "none" }) }}/>
         </Toolbar>
         <List>
           {MENU_ITEMS.map(({ label, icon, path }) => (

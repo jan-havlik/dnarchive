@@ -57,13 +57,14 @@ const AnalysisContainer = () => {
         >
           <ChromosomeSelector formData={formData} setFormData={setFormData} />
           <Button
-            variant="outlined"
+            variant="contained"
+            color="success"
             fullWidth
             onClick={() =>
               router.push({ pathname: "/analysis/data/", query: formData })
             }
           >
-            Save filter
+            START ANALYSIS
           </Button>
         </Stack>
       </Grid>
