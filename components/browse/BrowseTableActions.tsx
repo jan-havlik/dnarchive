@@ -1,4 +1,4 @@
-import InfoIcon from "@mui/icons-material/Info";
+import TroubleshootIcon from "@mui/icons-material/Troubleshoot";
 import { Box, IconButton, Tooltip } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useMemo } from "react";
@@ -17,24 +17,30 @@ export function BrowseTableActions({ chromosome, length }: Props) {
   const router = useRouter();
 
   const actions: Action[] = useMemo(
-    () => [{ icon: <InfoIcon />, placement: "bottom" }],
+    () => [{ icon: <TroubleshootIcon />, placement: "bottom" }],
     []
   );
 
   return (
     <Box sx={{ display: "flex" }}>
       {actions.map(({ icon, placement }, index) => (
-        <IconButton
+        <Tooltip
           key={index}
-          onClick={() =>
-            router.push({
-              pathname: "/sequence",
-              query: { chromosome, length },
-            })
-          }
+          title={`Analyze ${chromosome}`}
+          placement={placement || "top"}
         >
-          {icon}
-        </IconButton>
+          <IconButton
+            key={index}
+            onClick={() =>
+              router.push({
+                pathname: "/sequence",
+                query: { chromosome, length },
+              })
+            }
+          >
+            {icon}
+          </IconButton>
+        </Tooltip>
       ))}
     </Box>
   );
