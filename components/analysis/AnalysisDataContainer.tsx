@@ -1,4 +1,6 @@
 import { BrowseListQueryData } from "@components/types";
+import DownloadIcon from "@mui/icons-material/Download";
+import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -9,6 +11,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import MaterialReactTable, { MRT_ColumnDef } from "material-react-table";
+import { useRouter } from "next/router";
 import React, { useMemo } from "react";
 
 type Props = {
@@ -24,6 +27,8 @@ type Props = {
 };
 
 const AnalysisContainer = ({ items, settings, isLoading, isError }: Props) => {
+  const router = useRouter();
+  const { query } = router;
   const g4Columns = useMemo<MRT_ColumnDef<BrowseListQueryData[0]>[]>(
     () => [
       {
@@ -66,6 +71,29 @@ const AnalysisContainer = ({ items, settings, isLoading, isError }: Props) => {
     []
   );
 
+  // Function to convert array of objects to CSV string
+  const convertToCSV = (array: any) => {
+    const header = Object.keys(array[0]).join(",") + "\n";
+    const body = array
+      .map((obj: { [s: string]: unknown } | ArrayLike<unknown>) =>
+        Object.values(obj).join(",")
+      )
+      .join("\n");
+    return header + body;
+  };
+
+  const handleDownloadClick = () => {
+    const csvString = convertToCSV(items ?? []);
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "dnarchive_table_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Stack direction="column" spacing={2}>
       <Typography variant="h6">G4Hunter</Typography>
@@ -81,7 +109,8 @@ const AnalysisContainer = ({ items, settings, isLoading, isError }: Props) => {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                Window size: {settings.window_size}
+                Window size: {settings.window_size} | Threshold:{" "}
+                {settings.threshold} | Gene: {query?.name}
               </TableCell>
               <TableCell>
                 Frequency: {settings.freq_per_1k?.toFixed(2)} / 1000 bp
@@ -89,9 +118,26 @@ const AnalysisContainer = ({ items, settings, isLoading, isError }: Props) => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                Threshold: {settings.threshold}
+                Analysis area: {query.start} - {query.end}
               </TableCell>
               <TableCell>Total: {settings.total}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                Chromosomes:{" "}
+                {Array.isArray(query?.chromosome)
+                  ? query?.chromosome.join(", ")
+                  : query?.chromosome}
+              </TableCell>
+              <TableCell>
+                <Button
+                  startIcon={<DownloadIcon />}
+                  onClick={handleDownloadClick}
+                  style={{ textTransform: "none" }}
+                >
+                  Download results
+                </Button>
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

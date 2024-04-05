@@ -11,7 +11,7 @@ type Props = {
 };
 
 function Layout({ children }: Props) {
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(true);
 
   return (
     <Box sx={{ display: "flex" }}>

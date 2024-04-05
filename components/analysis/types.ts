@@ -7,4 +7,5 @@ export type FormData = {
   end: number;
   chromosome: string[];
   analysis: string;
+  name: string;
 };

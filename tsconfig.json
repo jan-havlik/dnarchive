@@ -20,8 +20,8 @@
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
       "@server/*": ["server/*"],
-      "@config": ["config/index.ts"],
-    },
+      "@config": ["config/index.ts"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

@@ -21,19 +21,21 @@ const GeneCard = ({ formData, setFormData }: Props) => {
 
   const handleSetGeneWindow = (
     _: any,
-    value: { chromosome: any; start: any; end: any }
+    value: { chromosome: any; start: any; end: any; name: string }
   ) => {
     if (!value) {
       return;
     }
+    console.log(data);
 
-    const { chromosome, start, end } = value;
+    const { chromosome, start, end, name } = value;
 
     setFormData({
       ...formData,
       chromosome: [chromosome],
       start,
       end,
+      name,
     });
   };
 

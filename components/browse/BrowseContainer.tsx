@@ -53,7 +53,7 @@ export function BrowseContainer({ data = [], isLoading, isError }: Props) {
       columns={columns}
       data={data ?? []}
       rowNumberMode="original"
-      enableTopToolbar
+      enableTopToolbar={false}
       enableColumnActions={false}
       enablePagination={false}
       muiTableBodyRowProps={{ hover: true }}

@@ -1,5 +1,4 @@
 import type { StatisticsQueryData } from "@components/types";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -10,6 +9,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Label,
   Legend,
   Rectangle,
   Tooltip,
@@ -60,7 +60,7 @@ export function StatisticsContainer({ data = [] }: Props) {
                   })
                 }
               >
-                Show analysis
+                Analyze
               </Button>
             </Stack>
 
@@ -79,8 +79,20 @@ export function StatisticsContainer({ data = [] }: Props) {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis dataKey="name">
+                <Label
+                  value={"G4 Threshold"}
+                  position="insideBottomRight"
+                  offset={-10}
+                />
+              </XAxis>
+              <YAxis
+                label={{
+                  value: "PQS frequency",
+                  angle: -90,
+                  position: "insideLeft",
+                }}
+              />
               <Tooltip />
               <Legend />
               <Bar
@@ -107,8 +119,21 @@ export function StatisticsContainer({ data = [] }: Props) {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
+              <XAxis dataKey="name">
+                <Label
+                  value={"G4 Threshold"}
+                  position="insideBottomRight"
+                  offset={-10}
+                />
+              </XAxis>
+              <YAxis
+                label={{
+                  value: "PQS threshold",
+                  angle: -90,
+                  position: "insideLeft",
+                  offset: -12,
+                }}
+              />
               <Tooltip />
               <Legend />
               <Bar
